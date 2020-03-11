@@ -22,11 +22,7 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/bookmarks' do
-    if params['url'] =~ /\A#{URI::regexp(['http', 'https'])}\z/
-      Bookmark.create(url: params[:url], title: params[:title])
-    else
-      flash[:notice] = "You must submit a valid URL."
-    end
+    flash[:notice] = "You must submit a valid URL." unless Bookmark.create(url: params[:url], title: params[:title])
     redirect '/bookmarks'
   end
 
@@ -40,9 +36,14 @@ class BookmarkManager < Sinatra::Base
     redirect '/bookmarks'
   end
 
-  put '/bookmarks/update/:id' do
-    Bookmark.update(id: params[:id], url: params[:url], title: params[:title])
+  get '/bookmarks/update/:id' do
+    @bookmark_id = params[:id]
     erb :'bookmarks/update'
+  end
+
+  patch '/bookmarks/:id' do
+    flash[:notice] = "You must submit a valid URL." unless Bookmark.update(id: params[:id], url: params[:url], title: params[:title])
+    redirect '/bookmarks'
   end
 
   run! if app_file == $0
