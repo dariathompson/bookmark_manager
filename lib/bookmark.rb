@@ -1,4 +1,4 @@
-require 'database_connection'
+require_relative 'database_connection'
 class Bookmark
   attr_reader :id, :title, :url
   def initialize(id:, title:, url:)
