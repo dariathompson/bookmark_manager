@@ -1,7 +1,9 @@
 require 'sinatra/base'
+require 'pg'
 require './lib/bookmark'
 
 class BookmarkManager < Sinatra::Base
+  enable :sessions, :method_override
   get '/' do
     'Hello World'
   end
@@ -19,6 +21,21 @@ class BookmarkManager < Sinatra::Base
   post '/bookmarks' do
     Bookmark.create(url: params[:url], title: params[:title])
     redirect '/bookmarks'
+  end
+
+  delete '/bookmarks/:id' do
+    Bookmark.delete(id: params[:id])
+    redirect '/bookmarks'
+  end
+
+  delete '/bookmarks/:id' do
+    Bookmark.delete(id: params[:id])
+    redirect '/bookmarks'
+  end
+
+  put '/bookmarks/update/:id' do
+    Bookmark.update(id: params[:id], url: params[:url], title: params[:title])
+    erb :'bookmarks/update'
   end
 
   run! if app_file == $0

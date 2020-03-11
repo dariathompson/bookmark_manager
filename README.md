@@ -11,6 +11,12 @@ As a user
 So I can store bookmark data for later retrieval
 I want to add a bookmark to Bookmark Manager
 ```
+
+```
+As a user
+So I can remove my bookmark from Bookmark Manager
+I want to delete a bookmark
+```
 ## How to setup database
 1. Connect to psql\
 2. Create the database using the psql command CREATE DATABASE bookmark_manager;\

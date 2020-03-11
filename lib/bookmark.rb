@@ -29,4 +29,22 @@ class Bookmark
       Bookmark.new(id: bookmark['id'], title: bookmark['title'], url: bookmark['url'])
     end
   end
+
+  def self.delete(id:)
+    if ENV['ENVIRONMENT'] == 'test'
+      connection = PG.connect(dbname: 'bookmark_manager_test')
+    else
+      connection = PG.connect(dbname: 'bookmark_manager')
+    end
+      connection.exec("DELETE FROM bookmarks WHERE id = #{id}")
+  end
+
+  def self.update(id:, title:, url:)
+    if ENV['ENVIRONMENT'] == 'test'
+      connection = PG.connect(dbname: 'bookmark_manager_test')
+    else
+      connection = PG.connect(dbname: 'bookmark_manager')
+    end
+      connection.exec("UPDATE bookmarks SET title = '#{title}', url = '#{url}' WHERE id = #{id} RETURNING id, url, title;")
+  end
 end
