@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 require 'sinatra/base'
 require 'sinatra/flash'
 require 'uri'
 require './lib/bookmark'
+require 'pg'
+require './lib/comment'
 require './database_connection_setup'
 
 class BookmarkManager < Sinatra::Base
@@ -22,7 +26,7 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/bookmarks' do
-    flash[:notice] = "You must submit a valid URL." unless Bookmark.create(url: params[:url], title: params[:title])
+    flash[:notice] = 'Please submit a valid URL.' unless Bookmark.create(url: params[:url], title: params[:title])
     redirect '/bookmarks'
   end
 
@@ -42,9 +46,19 @@ class BookmarkManager < Sinatra::Base
   end
 
   patch '/bookmarks/:id' do
-    flash[:notice] = "You must submit a valid URL." unless Bookmark.update(id: params[:id], url: params[:url], title: params[:title])
+    flash[:notice] = 'Please submit a valid URL.' unless Bookmark.update(id: params[:id], url: params[:url], title: params[:title])
     redirect '/bookmarks'
   end
 
-  run! if app_file == $0
+  get '/bookmarks/:id/comments/new' do
+    @bookmark_id = params[:id]
+    erb :'comments/new'
+  end
+
+  post '/bookmarks/:id/comments' do
+    Comment.create(text: params[:comment], bookmark_id: params[:id])
+    redirect '/bookmarks'
+  end
+
+  run! if app_file == $PROGRAM_NAME
 end

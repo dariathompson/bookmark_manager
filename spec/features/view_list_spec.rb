@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 feature 'viewing a list of bookmarks' do
   scenario 'returns a list of bookmarks' do
     connection = PG.connect(dbname: 'bookmark_manager_test')
@@ -6,7 +8,7 @@ feature 'viewing a list of bookmarks' do
     Bookmark.create(url: 'https://www.google.com/', title: 'Google')
     Bookmark.create(url: 'https://www.netflix.com/browse/', title: 'Netflix')
 
-    visit ('/bookmarks')
+    visit '/bookmarks'
 
     expect(page).to have_link('Makers Academy', href: 'https://makers.tech/')
     expect(page).to have_link('Google', href: 'https://www.google.com/')

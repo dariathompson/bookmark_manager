@@ -1,9 +1,11 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
 
-  gem 'capybara'
-  gem 'selenium-webdriver'
-  gem 'rspec'
-  gem 'sinatra'
-  gem 'pg'
-  gem 'rspec-core'
-  gem 'sinatra-flash'
+source 'https://rubygems.org'
+
+gem 'capybara'
+gem 'pg'
+gem 'rspec'
+gem 'rspec-core'
+gem 'selenium-webdriver'
+gem 'sinatra'
+gem 'sinatra-flash'

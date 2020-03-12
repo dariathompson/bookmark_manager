@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 feature 'delete a bookmark' do
   scenario 'user can delete a bookmark' do
     Bookmark.create(url: 'https://facebook.com', title: 'Facebook')

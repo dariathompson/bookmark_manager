@@ -1,11 +1,15 @@
+# frozen_string_literal: true
+
 require 'bookmark'
 require 'database_helpers'
 
 describe Bookmark do
+  let(:comment_class) { double(:comment_class) }
+
   describe '.create' do
     it 'creates a new bookmark' do
       bookmark = Bookmark.create(url: 'https://facebook.com', title: 'Facebook')
-      persisted_data = persisted_data(id: bookmark.id)
+      persisted_data = persisted_data(id: bookmark.id, table: 'bookmarks')
 
       expect(bookmark).to be_a Bookmark
       expect(bookmark.id).to eq persisted_data.first['id']
@@ -40,9 +44,9 @@ describe Bookmark do
   describe '.delete' do
     it 'deletes the given bookmark' do
       bookmark = Bookmark.create(url: 'https://makers.tech/', title: 'Makers Academy')
-  
+
       Bookmark.delete(id: bookmark.id)
-  
+
       expect(Bookmark.all.length).to eq 0
     end
   end
@@ -50,13 +54,21 @@ describe Bookmark do
   describe '.update' do
     it 'deletes the given bookmark' do
       bookmark = Bookmark.create(url: 'https://makers.tech/', title: 'Makers Academy')
-  
+
       Bookmark.update(id: bookmark.id, url: 'https://google.com/', title: 'Google')
-  
+
       expect(described_class.all.first.id).to eq bookmark.id
       expect(described_class.all.first.title).to eq 'Google'
       expect(described_class.all.first.url).to eq 'https://google.com/'
-      
+    end
+  end
+
+  describe '#comments' do
+    it 'calls .where on the Comment class' do
+      bookmark = Bookmark.create(title: 'Makers Academy', url: 'https://makers.tech/')
+      expect(comment_class).to receive(:where).with(bookmark_id: bookmark.id)
+
+      bookmark.comments(comment_class)
     end
   end
 end

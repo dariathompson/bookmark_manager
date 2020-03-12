@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 feature 'update a bookmark' do
   scenario 'user can update a bookmark' do
-   b = Bookmark.create(url: 'https://facebook.com', title: 'Facebook')
+    b = Bookmark.create(url: 'https://facebook.com', title: 'Facebook')
     visit('/bookmarks')
     expect(page).to have_link('Facebook', href: 'https://facebook.com')
 
