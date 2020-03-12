@@ -8,5 +8,5 @@ def setup_test_database
 
   # Clear the bookmarks table
   connection.exec('TRUNCATE bookmarks CASCADE;')
-  # connection.exec("TRUNCATE bookmarks, comments;")
+  #connection.exec("TRUNCATE bookmarks, comments;")
 end
