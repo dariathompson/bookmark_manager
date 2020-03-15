@@ -28,4 +28,8 @@ class Tag
     @id = id
     @content = content
   end
+
+  def bookmarks(bookmark_class = Bookmark)
+    bookmark_class.where(tag_id: id)
+  end
 end
