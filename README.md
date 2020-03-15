@@ -30,6 +30,12 @@ As a user
 So that I can find relevant bookmarks
 I want to filter Bookmarks by a Tag
 ```
+click on tag
+```
+As a user
+So that I can keep my account secure
+I want to sign in with my email and password
+```
 
 ## How to setup database
 1. Connect to psql\
