@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 feature 'tag a bookmark' do
   feature 'a user can add and then view a tag' do
     scenario 'a comment is added to a bookmark' do

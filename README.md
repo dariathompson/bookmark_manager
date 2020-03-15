@@ -24,6 +24,13 @@ So I can change a bookmark in Bookmark Manager
 I want to update a bookmark
 ```
 Click Update button
+
+```
+As a user
+So that I can find relevant bookmarks
+I want to filter Bookmarks by a Tag
+```
+
 ## How to setup database
 1. Connect to psql\
 2. Create the database using the psql command CREATE DATABASE bookmark_manager;\

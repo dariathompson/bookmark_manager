@@ -1,9 +1,13 @@
+# frozen_string_literal: true
+
 require_relative './database_connection'
+require_relative './bookmark'
 
 class Tag
   def self.create(content:)
-    result = DatabaseConnection.query("INSERT INTO tags (content) VALUES('#{content}') RETURNING id, content;")
-    Tag.new(id: result[0]['id'], content: result[0]['content'])
+    result = DatabaseConnection.query("SELECT * FROM tags WHERE content = '#{content}';").first
+    result ||= DatabaseConnection.query("INSERT INTO tags (content) VALUES('#{content}') RETURNING id, content;").first
+    Tag.new(id: result['id'], content: result['content'])
   end
 
   def self.where(bookmark_id:)
@@ -11,6 +15,11 @@ class Tag
     result.map do |tag|
       Tag.new(id: tag['id'], content: tag['content'])
     end
+  end
+
+  def self.find(id:)
+    result = DatabaseConnection.query("SELECT * FROM tags WHERE id = #{id};")
+    Tag.new(id: result[0]['id'], content: result[0]['content'])
   end
 
   attr_reader :id, :content
